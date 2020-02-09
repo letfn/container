@@ -21,6 +21,7 @@ steps:
     username:
       from_secret: docker_username
     tag: latest
+    dockerfile: Dockerfile.alt
 
 ---
 kind: pipeline
