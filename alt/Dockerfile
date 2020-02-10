@@ -2,6 +2,8 @@ FROM ubuntu:bionic
 
 WORKDIR /drone/src
 
+RUN echo 1
+
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y figlet rsync curl make git
 
