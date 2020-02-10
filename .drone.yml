@@ -11,6 +11,7 @@ steps:
 - name: everything
   image: letfn/drone-kaniko
   settings:
+    args: --reproducible
     cache: true
     cache_repo: letfn/cache
     dockerfile: alt/Dockerfile
@@ -21,6 +22,8 @@ steps:
     tag: latest
     username:
       from_secret: docker_username
+  environment:
+    BENCHMARK_FILE: /drone/src/benchmark/build.json
 
 ---
 kind: pipeline
