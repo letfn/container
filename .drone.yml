@@ -13,7 +13,7 @@ steps:
   settings:
     args: --destination=letfn/container
     cache: true
-    cache_repo: letfn/cache
+    cache_repo: defn/cache
     dockerfile: alt/Dockerfile
     password:
       from_secret: docker_password
