@@ -6,4 +6,4 @@ RUN apt-get update && apt-get upgrade -y
 
 COPY plugin /plugin
 
-ENTRYPOINT [ "/plugin" ]
+ENTRYPOINT [ "/tini", "--", "/plugin" ]

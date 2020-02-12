@@ -1,23 +1,26 @@
-FROM ubuntu:bionic-20200112 AS download
+FROM alpine:3.11.3 AS download
 
-RUN apt-get update && apt-get install -y curl
+RUN apk add curl
 
 WORKDIR /tmp
 
-RUN set -x; curl -sSL -O https://github.com/drone/drone-cli/releases/download/v1.2.1/drone_linux_amd64.tar.gz \
+RUN curl -sSL -O https://github.com/drone/drone-cli/releases/download/v1.2.1/drone_linux_amd64.tar.gz \
   && tar xvfz drone_linux_amd64.tar.gz \
   && rm -f drone_linux_amd64.tar.gz \
   && chmod 755 drone \
   && mv drone /usr/local/bin/
 
-FROM ubuntu:bionic-20200112
+FROM alpine:3.11.3
 
 WORKDIR /drone/src
 
-RUN apt-get update && apt-get upgrade -y
+RUN apk add curl make rsync git tini bash
+
+RUN ln -nfs /bin/bash /bin/sh
+RUN ln -nfs /sbin/tini /tini
 
 COPY --from=download /usr/local/bin/drone /usr/local/bin/drone
 
 COPY plugin /plugin
 
-ENTRYPOINT [ "/plugin" ]
+ENTRYPOINT [ "/tini", "--", "/plugin" ]
