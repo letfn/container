@@ -12,7 +12,11 @@ RUN curl -sSL -O https://github.com/drone/drone-cli/releases/download/v1.2.1/dro
 
 FROM alpine:3.11.3
 
-WORKDIR /drone/src
+WORKDIR /app/src
+
+RUN addgroup -g 8888 app
+RUN adduser -u 8888 -G app -h /app/src -s /bin/bash -H -D app
+RUN mkdir -p /app/src && chown -R app:app /app
 
 RUN apk add curl make rsync git tini bash
 
@@ -22,5 +26,7 @@ RUN ln -nfs /sbin/tini /tini
 COPY --from=download /usr/local/bin/drone /usr/local/bin/drone
 
 COPY plugin /plugin
+
+USER app
 
 ENTRYPOINT [ "/tini", "--", "/plugin" ]

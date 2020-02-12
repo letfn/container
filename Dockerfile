@@ -2,7 +2,7 @@ FROM letfn/container
 
 WORKDIR /drone/src
 
-RUN apt-get update && apt-get upgrade -y
+RUN apk update
 
 COPY plugin /plugin
 
