@@ -9,17 +9,12 @@ all: # Run everything except build
 	$(MAKE) fmt
 	$(MAKE) lint
 	$(MAKE) docs
-	$(MAKE) test
 
 fmt: # Format drone fmt
 	@echo
 	drone exec --pipeline $@
 
 lint: # Run drone lint
-	@echo
-	drone exec --pipeline $@
-
-test: # Run tests
 	@echo
 	drone exec --pipeline $@
 
