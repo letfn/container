@@ -27,4 +27,4 @@ build: # Build container
 	drone exec --pipeline $@
 
 edit:
-	docker-compose -f docker-compose.docs.yml up
+	docker-compose -f docker-compose.docs.yml up --quiet-pull
