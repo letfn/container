@@ -1,4 +1,4 @@
-FROM alpine:3.11.6 AS download
+FROM alpine:3.12.0 AS download
 
 RUN apk add curl
 
@@ -10,7 +10,7 @@ RUN curl -sSL -O https://github.com/drone/drone-cli/releases/download/v1.2.1/dro
   && chmod 755 drone \
   && mv drone /usr/local/bin/
 
-FROM alpine:3.11.6
+FROM alpine:3.12.0
 
 WORKDIR /app/src
 
