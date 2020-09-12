@@ -44,7 +44,7 @@ steps:
     args: --destination=letfn/container
     cache: true
     cache_repo: defn/cache
-    dockerfile: alt/Dockerfile
+    dockerfile: Dockerfile
     password:
       from_secret: docker_password
     repo: letfn/container
