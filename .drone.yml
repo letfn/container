@@ -1,29 +1,19 @@
 ---
 kind: pipeline
 type: docker
-name: fmt
+name: style
 
 platform:
   os: linux
   arch: amd64
 
 steps:
-- name: everything
+- name: fmt
   image: letfn/drone
   settings:
     task: fmt
 
----
-kind: pipeline
-type: docker
-name: lint
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: everything
+- name: lint
   image: letfn/drone
   settings:
     task: lint
@@ -31,30 +21,18 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: build
+name: test
 
 platform:
   os: linux
   arch: amd64
 
 steps:
-- name: kaniko
-  image: letfn/drone-kaniko
-  settings:
-    args: --destination=letfn/container
-    cache: true
-    cache_repo: defn/cache
-    dockerfile: Dockerfile
-    password:
-      from_secret: docker_password
-    repo: letfn/container
-    tag: latest
-    username:
-      from_secret: docker_username
-
-depends_on:
-- fmt
-- lint
+- name: local
+  image: letfn/container
+  commands:
+    - cd
+    - test -x "$(which tini)"
 
 ---
 kind: pipeline
@@ -69,31 +47,5 @@ steps:
 - name: local
   image: letfn/drone-hugo
 
-depends_on:
-- build
-
----
-kind: secret
-name: docker_username
-
-get:
-  path: kv/data/drone/common
-  name: docker_username
-
----
-kind: secret
-name: docker_password
-
-get:
-  path: kv/data/drone/common
-  name: docker_password
-
----
-kind: secret
-name: github_token
-
-get:
-  path: kv/data/drone/common
-  name: github_token
 
 ...
