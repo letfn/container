@@ -13,3 +13,6 @@ push: # Push letfn/container
 
 test: # Test letfn/container image
 	drone exec --pipeline test
+
+bash: # Run a bash shell with letfn/container
+	docker run --rm -ti letfn/container bash
